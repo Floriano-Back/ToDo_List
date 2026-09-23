@@ -27,7 +27,7 @@ const repository = {
         return result; 
     },
     update: async (description, status,id) => {
-        const sql = "UPDATE activity SET description = ?, status= ? WHERE id = ?;";
+        const sql = "UPDATE activity SET description = ?, status = ? WHERE id = ?;";
         const [result] = await pool.execute(sql, [description, status,id]);
         return result;
     }

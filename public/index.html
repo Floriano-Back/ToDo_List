@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Task Tracker</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+  <main class="ledger">
+    <header class="ledger-head">
+      <div class="ledger-head-top">
+        <h1>Task Tracker</h1>
+        <button id="settingsBtn" class="icon-btn" title="Configurar servidor" aria-label="Configurar servidor">⚙</button>
+      </div>
+      <p class="ledger-sub" id="statusLine">conectando…</p>
+    </header>
+
+    <section id="settingsPanel" class="settings-panel hidden">
+      <label for="apiHostInput">Endereço do backend</label>
+      <div class="settings-row">
+        <input id="apiHostInput" type="text" placeholder="http://localhost:3000">
+        <button id="saveApiBtn" class="btn btn-brass">Salvar</button>
+      </div>
+      <p class="settings-hint">Só o host:porta — o front já completa com /list. Deve bater com SERVER_PORT do backend.</p>
+    </section>
+
+    <form id="taskForm" class="task-form">
+      <input id="descInput" type="text" placeholder="Nova atividade…" autocomplete="off" required>
+      <button type="submit" class="btn btn-brass">Adicionar</button>
+    </form>
+
+    <nav class="filter-tabs" id="filterTabs">
+      <button class="tab active" data-filter="all">Todas</button>
+      <button class="tab" data-filter="pending">Pendentes</button>
+      <button class="tab" data-filter="done">Concluídas</button>
+    </nav>
+
+    <section id="listSection">
+      <ol id="taskList" class="task-list"></ol>
+      <p id="emptyState" class="empty-state hidden">Nenhuma atividade por aqui.</p>
+      <p id="errorState" class="error-state hidden"></p>
+    </section>
+  </main>
+
+  <script type="module" src="js/app.js"></script>
+</body>
+</html>

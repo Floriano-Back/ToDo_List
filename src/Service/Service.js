@@ -5,8 +5,8 @@ const service = {
         const result = await repository.create(description, status);
         return result;
     },
-    updateList: async (description, status) =>{
-        const result = await repository.update(description, status);
+    updateList: async (description, status,id) =>{
+        const result = await repository.update(description, status,id);
         return result;
     },
     deleteList: async (id) =>{
