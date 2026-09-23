@@ -40,22 +40,22 @@ Instalação e Execução
 
 Faça o clone deste repositório:
 
-# git clone https://github.com/Floriano-Back/ToDo_List.git
+git clone https://github.com/Floriano-Back/ToDo_List.git
 
 
 Navegue até o diretório do projeto:
 
-# cd ToDo_List
+cd ToDo_List
 
 
 Instale as dependências (caso o projeto possua um arquivo package.json):
 
-# npm install
+npm install
 
 
 Execute a aplicação:
 
-# node index.js 
+node index.js 
 
 
 (Caso o arquivo principal do seu projeto tenha outro nome, como app.js ou server.js, substitua index.js pelo nome correto).
