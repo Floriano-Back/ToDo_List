@@ -82,15 +82,20 @@ h1 { font-family: 'Fraunces', serif; font-weight: 600; font-size: 1.9rem; margin
 .task-row:last-child { border-bottom: none; }
 .task-row .num { font-variant-numeric: tabular-nums; color: var(--ink-soft); font-size: 0.85rem; width: 1.4rem; padding-top: 0.15rem; flex-shrink: 0; }
 
-.task-check {
-  appearance: none; width: 1.1rem; height: 1.1rem; border: 1.5px solid var(--ink); border-radius: 3px;
-  margin-top: 0.15rem; cursor: pointer; flex-shrink: 0; position: relative; background: var(--white);
+.status-select {
+  font-family: inherit;
+  font-size: 0.78rem;
+  font-weight: 600;
+  padding: 0.3rem 0.5rem;
+  border-radius: 999px;
+  border: 1px solid transparent;
+  cursor: pointer;
+  flex-shrink: 0;
+  margin-top: 0.05rem;
 }
-.task-check:checked { background: var(--done); border-color: var(--done); }
-.task-check:checked::after {
-  content: "✓"; position: absolute; color: var(--white); font-size: 0.75rem;
-  left: 50%; top: 46%; transform: translate(-50%, -50%);
-}
+.status-select.status-in-progress { background: #eadfce; color: var(--accent-dark); border-color: var(--accent); }
+.status-select.status-done { background: #dbe6df; color: var(--done); border-color: var(--done); }
+.status-select.status-stopped { background: #ecdbd6; color: var(--danger-dark); border-color: var(--danger); }
 
 .task-body { flex: 1; min-width: 0; }
 .task-desc { font-size: 0.98rem; word-break: break-word; }

@@ -4,10 +4,15 @@
 const DEFAULT_API_HOST = "http://localhost:3000";
 const STORAGE_KEY = "task_tracker_api_host";
 
+// Precisa bater exatamente com o ENUM da coluna "status" (script.sql):
+// ENUM("Finalizado", "Em Andamento", "Interrompido")
 export const STATUS = {
-  PENDING: 0,
-  DONE: 1,
+  IN_PROGRESS: "Em Andamento",
+  DONE: "Finalizado",
+  STOPPED: "Interrompido",
 };
+
+export const STATUS_LIST = [STATUS.IN_PROGRESS, STATUS.DONE, STATUS.STOPPED];
 
 export function getApiHost() {
   return localStorage.getItem(STORAGE_KEY) || DEFAULT_API_HOST;
@@ -36,7 +41,7 @@ export async function createActivity(description) {
   return request(listUrl(), {
     method: "POST",
     headers: { "Content-Type": "application/json" },
-    body: JSON.stringify({ description, status: STATUS.PENDING }),
+    body: JSON.stringify({ description, status: STATUS.IN_PROGRESS }),
   });
 }
 

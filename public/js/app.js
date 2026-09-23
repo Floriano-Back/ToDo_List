@@ -1,5 +1,6 @@
 import {
   STATUS,
+  STATUS_LIST,
   getApiHost,
   setApiHost,
   fetchActivities,
@@ -39,9 +40,14 @@ function clearError() {
 }
 
 function filtered() {
-  if (currentFilter === "pending") return activities.filter(a => !a.status);
-  if (currentFilter === "done") return activities.filter(a => Boolean(a.status));
-  return activities;
+  if (currentFilter === "all") return activities;
+  return activities.filter(a => a.status === currentFilter);
+}
+
+function statusClass(status) {
+  if (status === STATUS.DONE) return "done";
+  if (status === STATUS.STOPPED) return "stopped";
+  return "in-progress";
 }
 
 function render() {
@@ -57,25 +63,30 @@ function render() {
     num.className = "num";
     num.textContent = String(index + 1).padStart(2, "0");
 
-    const checkbox = document.createElement("input");
-    checkbox.type = "checkbox";
-    checkbox.className = "task-check";
-    checkbox.checked = Boolean(activity.status);
-    checkbox.addEventListener("change", () => toggleActivity(activity, checkbox.checked));
-
     const body = document.createElement("div");
     body.className = "task-body";
     const desc = document.createElement("div");
-    desc.className = "task-desc" + (activity.status ? " done" : "");
+    desc.className = "task-desc" + (activity.status === STATUS.DONE ? " done" : "");
     desc.textContent = activity.description ?? "(sem descrição)";
     body.appendChild(desc);
+
+    const select = document.createElement("select");
+    select.className = "status-select status-" + statusClass(activity.status);
+    STATUS_LIST.forEach(value => {
+      const opt = document.createElement("option");
+      opt.value = value;
+      opt.textContent = value;
+      opt.selected = value === activity.status;
+      select.appendChild(opt);
+    });
+    select.addEventListener("change", () => updateStatus(activity, select.value));
 
     const del = document.createElement("button");
     del.className = "task-delete";
     del.textContent = "excluir";
     del.addEventListener("click", () => removeActivity(activity));
 
-    li.append(num, checkbox, body, del);
+    li.append(num, body, select, del);
     els.list.appendChild(li);
   });
 }
@@ -102,13 +113,13 @@ async function addActivity(description) {
     await createActivity(description);
     await loadActivities();
   } catch (err) {
-    showError("Não foi possível criar a atividade.");
+    showError("Não foi possível criar a atividade — a descrição precisa ser única, talvez já exista uma igual.");
   }
 }
 
-async function toggleActivity(activity, checked) {
+async function updateStatus(activity, newStatus) {
   try {
-    await updateActivity(activity.id, activity.description, checked ? STATUS.DONE : STATUS.PENDING);
+    await updateActivity(activity.id, activity.description, newStatus);
     await loadActivities();
   } catch (err) {
     showError("Não foi possível atualizar a atividade (confira o bug de :id no backend — ver README).");
